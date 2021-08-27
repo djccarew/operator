@@ -176,9 +176,14 @@ func (c *Controller) createOperatorSecret(ctx context.Context, operator metav1.O
 			Labels:    labels,
 			OwnerReferences: []metav1.OwnerReference{
 				*metav1.NewControllerRef(operator, schema.GroupVersionKind{
-					Group:   miniov2.SchemeGroupVersion.Group,
-					Version: miniov2.SchemeGroupVersion.Version,
-					Kind:    miniov2.OperatorCRDResourceKind,
+//					Group:   miniov2.SchemeGroupVersion.Group,
+//					Version: miniov2.SchemeGroupVersion.Version,
+//					Kind:    miniov2.OperatorCRDResourceKind,
+//   Make parent of tls secret the Operator deployment. As coded before it points to a CR that does not exist so Tenant
+//   creation fails. 
+					Group:   "apps",
+					Version: "v1",
+					Kind:    "Deployment",
 				}),
 			},
 		},
